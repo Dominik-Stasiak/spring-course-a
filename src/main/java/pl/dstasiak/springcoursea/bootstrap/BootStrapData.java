@@ -4,18 +4,22 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.dstasiak.springcoursea.domain.Author;
 import pl.dstasiak.springcoursea.domain.Book;
+import pl.dstasiak.springcoursea.domain.Publisher;
 import pl.dstasiak.springcoursea.repositories.AuthorRepository;
 import pl.dstasiak.springcoursea.repositories.BookRepository;
+import pl.dstasiak.springcoursea.repositories.PublisherRepository;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -48,5 +52,24 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Started in Bootstrap");
         System.out.println("Authors count: " + authorRepository.count());
         System.out.println("Books count: " + bookRepository.count());
+
+        Publisher publisherA = new Publisher();
+        publisherA.setName("Publisher A");
+        publisherA.setCity("City A");
+        publisherA.setState("State A");
+        publisherA.setAddress("Address A");
+        publisherA.setZip("Zip A");
+
+        Publisher publisherB = new Publisher();
+        publisherB.setName("Publisher B");
+        publisherB.setCity("City B");
+        publisherB.setState("State B");
+        publisherB.setAddress("Address B");
+        publisherB.setZip("Zip B");
+
+        publisherRepository.save(publisherA);
+        publisherRepository.save(publisherB);
+
+        System.out.println("Publishers count: " + publisherRepository.count());
     }
 }
